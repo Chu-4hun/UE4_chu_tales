@@ -2,6 +2,10 @@
 
 #include "chu_tales_game/Public/SandboxPawn.h"
 
+#include "Camera/CameraComponent.h"
+#include "Components/InputComponent.h"
+
+
 DEFINE_LOG_CATEGORY_STATIC(LogSandboxPawn, All, All)
 
 
@@ -13,7 +17,14 @@ ASandboxPawn::ASandboxPawn()
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>("SceneComponent");
 	SetRootComponent(SceneComponent);
+
+	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("StaticMeshComponent");
+	StaticMeshComponent->SetupAttachment(GetRootComponent());
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
+	CameraComponent->SetupAttachment(GetRootComponent());
 }
+
 
 // Called when the game starts or when spawned
 void ASandboxPawn::BeginPlay()
@@ -25,7 +36,7 @@ void ASandboxPawn::BeginPlay()
 void ASandboxPawn::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (VelocityVector.IsZero())
+	if (!VelocityVector.IsZero())
 	{
 		const FVector NewLocation = GetActorLocation() + Velocity * DeltaTime * VelocityVector;
 		SetActorLocation(NewLocation);

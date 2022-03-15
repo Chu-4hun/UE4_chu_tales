@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "SandboxPawn.generated.h"
 
+class UCameraComponent;
+
 UCLASS()
 class CHU_TALES_GAME_API ASandboxPawn : public APawn
 {
@@ -18,8 +20,15 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* SceneComponent;
 
+	UPROPERTY(VisibleAnywhere)
+	UStaticMeshComponent* StaticMeshComponent;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* CameraComponent;
+
 	UPROPERTY(Editanywhere)
 	float Velocity = 300.0f;
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -37,4 +46,3 @@ private:
 	void MoveForward(float Amount);
 	void MoveRight(float Amount);
 };
-
