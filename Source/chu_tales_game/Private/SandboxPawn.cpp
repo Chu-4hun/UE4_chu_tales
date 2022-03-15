@@ -26,6 +26,19 @@ ASandboxPawn::ASandboxPawn()
 }
 
 
+void ASandboxPawn::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+	UE_LOG(LogSandboxPawn, Warning, TEXT("%s possessed %s"), *GetName(), *NewController->GetName());
+
+}
+
+void ASandboxPawn::UnPossessed()
+{
+	Super::UnPossessed();
+	UE_LOG(LogSandboxPawn, Warning, TEXT("%s possessed"), *GetName());
+}
+
 // Called when the game starts or when spawned
 void ASandboxPawn::BeginPlay()
 {
@@ -40,7 +53,11 @@ void ASandboxPawn::Tick(float DeltaTime)
 	{
 		const FVector NewLocation = GetActorLocation() + Velocity * DeltaTime * VelocityVector;
 		SetActorLocation(NewLocation);
+		VelocityVector = FVector::ZeroVector;
 	}
+	GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Emerald,
+	                                 FString::Printf(
+		                                 TEXT("Curent position: %s"), ToCStr(GetActorLocation().ToString())));
 }
 
 // Called to bind functionality to input
@@ -53,12 +70,13 @@ void ASandboxPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void ASandboxPawn::MoveForward(float Amount)
 {
-	UE_LOG(LogSandboxPawn, Display, TEXT("Move forvard: %f"), Amount);
+	// UE_LOG(LogSandboxPawn, Display, TEXT("Move forvard: %f"), Amount);
+
 	VelocityVector.X = Amount;
 }
 
 void ASandboxPawn::MoveRight(float Amount)
 {
-	UE_LOG(LogSandboxPawn, Display, TEXT("Move Right: %f"), Amount);
+	// UE_LOG(LogSandboxPawn, Display, TEXT("Move Right: %f"), Amount);
 	VelocityVector.Y = Amount;
 }
