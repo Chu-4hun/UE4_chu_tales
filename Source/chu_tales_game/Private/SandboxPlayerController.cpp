@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// chu_game, All Rights Reserved
 
 
 #include "chu_tales_game/Public/SandboxPlayerController.h"
