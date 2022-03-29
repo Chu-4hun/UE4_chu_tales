@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
+#include "Components/ChT_HealthComponent.h"
+#include "Components/TextRenderComponent.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "ChT_BaseCharacter.generated.h"
@@ -24,6 +26,12 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
 	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
+	UChT_HealthComponent* HealthComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
+	UTextRenderComponent* HealthTextComponent; 
 	
 	virtual void BeginPlay() override;
 

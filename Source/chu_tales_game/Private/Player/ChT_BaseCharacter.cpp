@@ -20,18 +20,28 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>("CameraComponent");
 	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	HealthComponent = CreateDefaultSubobject<UChT_HealthComponent>("HealthComponent");
+	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
+	HealthTextComponent->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
 void AChT_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	check(HealthComponent);
+	check(HealthTextComponent);
 }
 
 // Called every frame
 void AChT_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	const float Health = HealthComponent->GetHealth();
+	HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }
 
 // Called to bind functionality to input
@@ -47,6 +57,8 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AChT_BaseCharacter::Jump);
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
+
+	
 }
 
 void AChT_BaseCharacter::MoveForward(float Amount)
@@ -57,7 +69,7 @@ void AChT_BaseCharacter::MoveForward(float Amount)
 
 void AChT_BaseCharacter::MoveRight(float Amount)
 {
-	if (Amount ==0.0f) return;
+	if (Amount == 0.0f) return;
 	AddMovementInput(GetActorRightVector(), Amount);
 }
 
@@ -89,5 +101,5 @@ float AChT_BaseCharacter::GetMovementDirection() const
 	const float AngleBetween = FMath::Acos(FVector::DotProduct(GetActorForwardVector(), VelocityNormal));
 	const FVector CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelocityNormal);
 	const float Degrees = FMath::RadiansToDegrees(AngleBetween);
-	return CrossProduct.IsZero()? Degrees:Degrees * FMath::Sign(CrossProduct.Z);
+	return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
 }
