@@ -6,6 +6,8 @@
 #include "Components/ChT_CharacterMovementComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
+DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
+
 
 // Sets default values
 AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super(
@@ -30,9 +32,11 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 void AChT_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	check(HealthComponent);
 	check(HealthTextComponent);
+	
+	
 }
 
 // Called every frame
@@ -57,8 +61,6 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AChT_BaseCharacter::Jump);
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
-
-	
 }
 
 void AChT_BaseCharacter::MoveForward(float Amount)
@@ -88,6 +90,7 @@ void AChT_BaseCharacter::OnEndRunning()
 {
 	WantsToRun = false;
 }
+
 
 bool AChT_BaseCharacter::IsRunning() const
 {
