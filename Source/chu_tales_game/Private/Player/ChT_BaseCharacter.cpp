@@ -35,17 +35,24 @@ void AChT_BaseCharacter::BeginPlay()
 
 	check(HealthComponent);
 	check(HealthTextComponent);
-	
-	
+	check(GetCharacterMovement());
+
+	OnHealthChanged(HealthComponent->GetHealth());
+
+	HealthComponent->OnDeath.AddUObject(this, &AChT_BaseCharacter::OnDeath);
+	HealthComponent->OnHealthChanged.AddUObject(this, &AChT_BaseCharacter::OnHealthChanged);
 }
+
+void AChT_BaseCharacter::OnHealthChanged(float Health)
+{
+	HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
+}
+
 
 // Called every frame
 void AChT_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	const float Health = HealthComponent->GetHealth();
-	HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
 }
 
 // Called to bind functionality to input
@@ -105,4 +112,15 @@ float AChT_BaseCharacter::GetMovementDirection() const
 	const FVector CrossProduct = FVector::CrossProduct(GetActorForwardVector(), VelocityNormal);
 	const float Degrees = FMath::RadiansToDegrees(AngleBetween);
 	return CrossProduct.IsZero() ? Degrees : Degrees * FMath::Sign(CrossProduct.Z);
+}
+
+void AChT_BaseCharacter::OnDeath()
+{
+	UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName())
+
+	PlayAnimMontage(DeathAnimMontage);
+
+	GetCharacterMovement()->DisableMovement();
+
+	SetLifeSpan(5.0f);
 }
