@@ -117,11 +117,9 @@ float AChT_BaseCharacter::GetMovementDirection() const
 void AChT_BaseCharacter::OnDeath()
 {
 	UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName())
-
+	
 	PlayAnimMontage(DeathAnimMontage);
-
 	GetCharacterMovement()->DisableMovement();
-
 	SetLifeSpan(5.0f);
 
 	if(Controller)

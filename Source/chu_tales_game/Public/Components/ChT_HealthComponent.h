@@ -9,6 +9,27 @@
 DECLARE_MULTICAST_DELEGATE(FOnDeath)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float)
 
+USTRUCT(BlueprintType)
+struct FAutoHeal
+{
+	GENERATED_BODY();
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
+	bool bAutoHeal = false;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
+	float TimeToStartAutoHeal = 5.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
+	float HealTick = 5.0f;
+
+	
+	
+};
+
+
+
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CHU_TALES_GAME_API UChT_HealthComponent : public UActorComponent
 {
@@ -27,8 +48,11 @@ public:
 	FOnHealthChanged OnHealthChanged;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = 0.0f ))
 	float MaxHealth = 100.0f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = 0.0f ))
+	FAutoHeal AutoHeal;
 
 	virtual void BeginPlay() override;
 
@@ -38,4 +62,6 @@ private:
 	UFUNCTION()
 	void OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	                           class AController* InstigatedBy, AActor* DamageCauser);
+
+	
 };
