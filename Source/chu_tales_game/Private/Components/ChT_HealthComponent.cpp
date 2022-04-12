@@ -47,7 +47,3 @@ void UChT_HealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, c
 void UChT_HealthComponent::HealUpdate()
 {
 }
-
-void UChT_HealthComponent::HealUpdate()
-{
-}
