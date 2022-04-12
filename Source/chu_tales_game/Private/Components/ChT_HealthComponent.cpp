@@ -43,3 +43,11 @@ void UChT_HealthComponent::OnTakeAnyDamage(AActor* DamagedActor, float Damage, c
 	// UE_LOG(HealthComponentLog, Display, TEXT("Damage: %f Damage causer: %s"), Damage, *DamageCauser->GetName());
 
 }
+
+void UChT_HealthComponent::HealUpdate()
+{
+}
+
+void UChT_HealthComponent::HealUpdate()
+{
+}

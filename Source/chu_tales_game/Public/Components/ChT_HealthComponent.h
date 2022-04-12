@@ -21,9 +21,11 @@ struct FAutoHeal
 	float TimeToStartAutoHeal = 5.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
-	float HealTick = 5.0f;
+	float HealTickRateS = 5.0f;
 
-	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
+	float HealModifier = 1.0f;
+
 	
 };
 
@@ -58,10 +60,13 @@ protected:
 
 private:
 	float Health = 0.0f;
+	FTimerHandle HealTimerHandle;
 
 	UFUNCTION()
 	void OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	                           class AController* InstigatedBy, AActor* DamageCauser);
+
+	void HealUpdate();
 
 	
 };
