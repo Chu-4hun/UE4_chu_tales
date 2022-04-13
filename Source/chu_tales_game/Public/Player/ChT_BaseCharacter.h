@@ -36,7 +36,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	UAnimMontage* DeathAnimMontage;
 
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Damage")
+	float LifeSpanOnDeath = 5.0f;
 	
 	virtual void BeginPlay() override;
 

@@ -6,8 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "ChT_HealthComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnDeath)
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float)
+DECLARE_MULTICAST_DELEGATE(FOnDeathSignsture);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSugnature, float);
 
 USTRUCT(BlueprintType)
 struct FAutoHeal
@@ -15,22 +15,19 @@ struct FAutoHeal
 	GENERATED_BODY();
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal")
-	bool bAutoHeal = false;
+	bool bAutoHealIsEnable = false;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHealIsEnable"))
 	float TimeToStartAutoHeal = 5.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
-	float HealTickRateS = 5.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHealIsEnable"))
+	float HealUpdateTime = 5.0f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHeal"))
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Heal", meta =(EditCondition = "bAutoHealIsEnable"))
 	float HealModifier = 1.0f;
 
 	
 };
-
-
-
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CHU_TALES_GAME_API UChT_HealthComponent : public UActorComponent
@@ -44,10 +41,10 @@ public:
 	float GetHealth() const { return Health; }
 
 	UFUNCTION(BlueprintCallable)
-	bool IsDead() const {return Health <= 0.0f;};
+	bool IsDead() const {return FMath::IsNearlyZero(Health);};
 
-	FOnDeath OnDeath;
-	FOnHealthChanged OnHealthChanged;
+	FOnDeathSignsture OnDeath;
+	FOnHealthChangedSugnature OnHealthChanged;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = 0.0f ))
@@ -67,6 +64,5 @@ private:
 	                           class AController* InstigatedBy, AActor* DamageCauser);
 
 	void HealUpdate();
-
-	
+	void SetHealth(float NewHealth);
 };

@@ -59,6 +59,7 @@ void AChT_BaseCharacter::Tick(float DeltaTime)
 void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	check(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AChT_BaseCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChT_BaseCharacter::MoveRight);
@@ -120,10 +121,11 @@ void AChT_BaseCharacter::OnDeath()
 	
 	PlayAnimMontage(DeathAnimMontage);
 	GetCharacterMovement()->DisableMovement();
-	SetLifeSpan(5.0f);
+	SetLifeSpan(LifeSpanOnDeath);
 
 	if(Controller)
 	{
 		Controller->ChangeState(NAME_Spectating);
 	}
+	
 }
