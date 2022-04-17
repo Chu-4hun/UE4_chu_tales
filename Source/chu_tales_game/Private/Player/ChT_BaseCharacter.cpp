@@ -4,6 +4,7 @@
 #include "Player/ChT_BaseCharacter.h"
 
 #include "Components/ChT_CharacterMovementComponent.h"
+#include "Components/ChT_WeaponComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 DEFINE_LOG_CATEGORY_STATIC(BaseCharacterLog, All, All);
@@ -26,6 +27,9 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 	HealthComponent = CreateDefaultSubobject<UChT_HealthComponent>("HealthComponent");
 	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
 	HealthTextComponent->SetupAttachment(GetRootComponent());
+
+	WeaponComponent = CreateDefaultSubobject<UChT_WeaponComponent>("WeaponComponent");
+	WeaponComponent->SetUp
 }
 
 // Called when the game starts or when spawned

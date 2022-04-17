@@ -3,13 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Camera/CameraComponent.h"
+
 #include "Components/ChT_HealthComponent.h"
 #include "Components/TextRenderComponent.h"
+
 #include "GameFramework/Character.h"
 #include "GameFramework/SpringArmComponent.h"
+
 #include "ChT_BaseCharacter.generated.h"
 
+class UChT_WeaponComponent;
 UCLASS()
 class CHU_TALES_GAME_API AChT_BaseCharacter : public ACharacter
 {
@@ -33,6 +38,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
 	UTextRenderComponent* HealthTextComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
+	UChT_WeaponComponent* WeaponComponent;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	UAnimMontage* DeathAnimMontage;
 
