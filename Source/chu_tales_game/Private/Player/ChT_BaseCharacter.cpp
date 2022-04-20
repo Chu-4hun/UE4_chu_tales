@@ -28,8 +28,9 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
 	HealthTextComponent->SetupAttachment(GetRootComponent());
 
-	WeaponComponent = CreateDefaultSubobject<UChT_WeaponComponent>("WeaponComponent");
-	WeaponComponent->SetUp
+	WeaponComponent = CreateDefaultSubobject<UChT_WeaponComponent>("Weapon Component");
+
+	
 }
 
 // Called when the game starts or when spawned

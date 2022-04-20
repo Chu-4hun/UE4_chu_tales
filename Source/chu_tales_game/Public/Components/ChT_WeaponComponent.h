@@ -8,6 +8,7 @@
 
 
 class AChT_BaseWeapon;
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 {
@@ -17,7 +18,7 @@ public:
 	UChT_WeaponComponent();
 
 protected:
-	UPROPERTY(EditDefaultsonly, Category = "Weapon")
+	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AChT_BaseWeapon> WeaponClass;
 
 	virtual void BeginPlay() override;

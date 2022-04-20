@@ -14,6 +14,7 @@
 
 #include "ChT_BaseCharacter.generated.h"
 
+class UChT_WeaponsComponent;
 class UChT_WeaponComponent;
 UCLASS()
 class CHU_TALES_GAME_API AChT_BaseCharacter : public ACharacter
@@ -37,15 +38,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
 	UTextRenderComponent* HealthTextComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
-	UChT_WeaponComponent* WeaponComponent;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	UAnimMontage* DeathAnimMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Damage")
 	float LifeSpanOnDeath = 5.0f;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
+	UChT_WeaponComponent* WeaponComponent;
 	
 	virtual void BeginPlay() override;
 
