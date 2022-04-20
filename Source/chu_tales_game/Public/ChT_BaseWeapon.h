@@ -14,6 +14,8 @@ class CHU_TALES_GAME_API AChT_BaseWeapon : public AActor
 public:	
 	AChT_BaseWeapon();
 
+	virtual void Attack();
+
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category="Components")
 	UStaticMeshComponent* WeaponMesh;

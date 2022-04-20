@@ -17,12 +17,21 @@ class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 public:
 	UChT_WeaponComponent();
 
+	void Attack();
+
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AChT_BaseWeapon> WeaponClass;
 
+	UPROPERTY(EditAnywhere,Category = "Weapon")
+	FName BoneName = "hand_r_weapon";
+
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY()
+	AChT_BaseWeapon* CurrentWeapon;
+
+	
 	void SpawnWeapon();
 };

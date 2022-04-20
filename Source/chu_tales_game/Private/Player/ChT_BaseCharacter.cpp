@@ -25,6 +25,7 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	HealthComponent = CreateDefaultSubobject<UChT_HealthComponent>("HealthComponent");
+	
 	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
 	HealthTextComponent->SetupAttachment(GetRootComponent());
 
@@ -65,15 +66,18 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	check(PlayerInputComponent);
+	check(WeaponComponent);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AChT_BaseCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChT_BaseCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("LookUp", this, &AChT_BaseCharacter::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookAround", this, &AChT_BaseCharacter::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("Zoom", this, &AChT_BaseCharacter::Zoom);
+
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AChT_BaseCharacter::Jump);
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed,WeaponComponent,&UChT_WeaponComponent::Attack);
 }
 
 void AChT_BaseCharacter::MoveForward(float Amount)
