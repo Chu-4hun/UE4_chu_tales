@@ -38,15 +38,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
 	UTextRenderComponent* HealthTextComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
+	UChT_WeaponComponent* WeaponComponent;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	UAnimMontage* DeathAnimMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Damage")
 	float LifeSpanOnDeath = 5.0f;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category ="Components")
-	UChT_WeaponComponent* WeaponComponent;
 	
 	virtual void BeginPlay() override;
 
@@ -62,6 +62,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetMovementDirection() const;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Damage")
+	bool bIsUpperBody = false;
 
 private:
 	bool WantsToRun = false;

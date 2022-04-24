@@ -7,6 +7,7 @@
 #include "ChT_WeaponComponent.generated.h"
 
 
+class AChT_BaseCharacter;
 class AChT_BaseWeapon;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -17,7 +18,6 @@ class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 public:
 	UChT_WeaponComponent();
 
-	void Attack();
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
@@ -28,9 +28,14 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	void Attack();
+	
+
 private:
 	UPROPERTY()
 	AChT_BaseWeapon* CurrentWeapon;
+	
 
 	
 	void SpawnWeapon();

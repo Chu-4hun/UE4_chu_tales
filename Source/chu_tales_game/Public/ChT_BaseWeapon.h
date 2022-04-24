@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "ChT_BaseWeapon.generated.h"
 
@@ -19,7 +20,16 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category="Components")
 	UStaticMeshComponent* WeaponMesh;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite, Category="Components")
+	UBoxComponent* WeaponCollider;
 	
+	FActorBeginOverlapSignature OverlapSignature;
 	
 	virtual void BeginPlay() override;
+
+private:
+	
+	UFUNCTION()
+	void OnOverlap(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 };

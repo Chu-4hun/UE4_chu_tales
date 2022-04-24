@@ -12,7 +12,6 @@ UChT_WeaponComponent::UChT_WeaponComponent()
 }
 
 
-
 void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
@@ -22,20 +21,22 @@ void UChT_WeaponComponent::BeginPlay()
 void UChT_WeaponComponent::SpawnWeapon()
 {
 	if (!GetWorld()) return;
-	if (!Cast<ACharacter>(GetOwner()))return;
+	if(!Cast<ACharacter>(GetOwner()))return;
 
+
+	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
 	CurrentWeapon = GetWorld()->SpawnActor<AChT_BaseWeapon>(WeaponClass);
-	ACharacter* CharaterOwner = Cast<ACharacter>(GetOwner());
 	
 	if (!CurrentWeapon)return;
-	
+
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-	CurrentWeapon->AttachToComponent(CharaterOwner->GetMesh(), AttachmentRules, BoneName); //"hand_r_weapon"
+	CurrentWeapon->AttachToComponent(CharacterOwner->GetMesh(), AttachmentRules, BoneName); //"hand_r_weapon"
 }
 
 
 void UChT_WeaponComponent::Attack()
 {
-	if(!CurrentWeapon) return;
+	if (!CurrentWeapon) return;
 	CurrentWeapon->Attack();
 }
+

@@ -77,7 +77,8 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AChT_BaseCharacter::Jump);
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
-	PlayerInputComponent->BindAction("Attack", IE_Pressed,WeaponComponent,&UChT_WeaponComponent::Attack);
+	//Slash attack moved to BPs
+	//PlayerInputComponent->BindAction("Attack", IE_Pressed,WeaponComponent,&UChT_WeaponComponent::Attack);
 }
 
 void AChT_BaseCharacter::MoveForward(float Amount)
