@@ -7,7 +7,7 @@
 AChT_SwordBase::AChT_SwordBase()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>("SceneComponent");
 	SetRootComponent(SceneComponent);
@@ -17,7 +17,7 @@ AChT_SwordBase::AChT_SwordBase()
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>("Box_collision");
 	BoxCollision->SetCollisionProfileName("SwordCollision");
-	BoxCollision->SetupAttachment(GetRootComponent());
+	BoxCollision->SetupAttachment(StaticMesh);
 
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AChT_SwordBase::OnOverlapBegin);
 }

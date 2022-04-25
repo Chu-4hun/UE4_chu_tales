@@ -3,7 +3,6 @@
 
 #include "Components/ChT_WeaponComponent.h"
 
-#include "ChT_BaseWeapon.h"
 #include "GameFramework/Character.h"
 
 UChT_WeaponComponent::UChT_WeaponComponent()
@@ -25,7 +24,7 @@ void UChT_WeaponComponent::SpawnWeapon()
 
 
 	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
-	CurrentWeapon = GetWorld()->SpawnActor<AChT_BaseWeapon>(WeaponClass);
+	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass);
 	
 	if (!CurrentWeapon)return;
 
@@ -36,7 +35,6 @@ void UChT_WeaponComponent::SpawnWeapon()
 
 void UChT_WeaponComponent::Attack()
 {
-	if (!CurrentWeapon) return;
-	CurrentWeapon->Attack();
+	
 }
 

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ChT_SwordBase.h"
 #include "Components/ActorComponent.h"
 #include "ChT_WeaponComponent.generated.h"
 
@@ -21,7 +22,7 @@ public:
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
-	TSubclassOf<AChT_BaseWeapon> WeaponClass;
+	TSubclassOf<AChT_SwordBase> WeaponClass;
 
 	UPROPERTY(EditAnywhere,Category = "Weapon")
 	FName BoneName = "hand_r_weapon";
@@ -34,7 +35,7 @@ protected:
 
 private:
 	UPROPERTY()
-	AChT_BaseWeapon* CurrentWeapon;
+	AChT_SwordBase* CurrentWeapon;
 	
 
 	
