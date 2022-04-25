@@ -27,15 +27,17 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* BoxCollision;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float Damage = 0.0f;
 
 	// CoolDown var needed 
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
 	
 
 	virtual void BeginPlay() override;
+
+private:
+	void DealDamageToActor(AActor* Other,float DealDamage);
 };

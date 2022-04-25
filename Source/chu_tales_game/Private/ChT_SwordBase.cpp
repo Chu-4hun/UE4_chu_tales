@@ -3,6 +3,10 @@
 
 #include "ChT_SwordBase.h"
 
+#include "Kismet/GameplayStatics.h"
+
+
+DEFINE_LOG_CATEGORY_STATIC(SwordLog, All, All);
 // Sets default values
 AChT_SwordBase::AChT_SwordBase()
 {
@@ -26,16 +30,22 @@ void AChT_SwordBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                     const FHitResult& SweepResult)
 {
-	// OtherActor->TakeDamage(Damage,,,this);
-
-	//CoolDown Check
-	GEngine->AddOnScreenDebugMessage(1, 5.0f, FColor::Red,
+	const AActor* Player = (AActor*)UGameplayStatics::GetPlayerCharacter(GetWorld(),0) ; //weak point for Networking
+	if (OtherActor == Player)return;
+	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red,
 	                                 FString::Printf(
-		                                 TEXT("Deal damage: %f"), Damage));
+		                                 TEXT("Deal damage: %f to %s"), Damage,*OtherActor->GetName()));
+	DealDamageToActor(OtherActor,Damage);
 }
 
 // Called when the game starts or when spawned
 void AChT_SwordBase::BeginPlay()
 {
 	Super::BeginPlay();
+}
+
+void AChT_SwordBase::DealDamageToActor(AActor* Other, float DealDamage)
+{
+	const TSubclassOf<UDamageType> DmgTypeClass = UDamageType::StaticClass();
+	Other->TakeDamage(DealDamage, FDamageEvent(DmgTypeClass), nullptr, this);
 }
