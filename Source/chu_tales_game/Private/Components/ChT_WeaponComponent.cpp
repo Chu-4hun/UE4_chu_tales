@@ -36,26 +36,35 @@ void UChT_WeaponComponent::SpawnWeapon()
 
 void UChT_WeaponComponent::Attack()
 {
-	
+	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = true;
 	float Delay = PlayAttackAnim();
-	
-	UE_LOG(WeaponComponetLog,Display,TEXT("Delay %f"), Delay);
-	
-	GetWorld()->GetTimerManager().SetTimer(TimerHandler, this, &UChT_WeaponComponent::OnSwingEnd, Delay,
+
+	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
+
+	GetWorld()->GetTimerManager().SetTimer(AnimTimerHandler, this, &UChT_WeaponComponent::OnSwingEnd, Delay,
 	                                       false, Delay);
+	CurrentCoolDown = CurrentWeapon->CoolDown;
+	GetWorld()->GetTimerManager().SetTimer(CoolDownTimerHandler, this, &UChT_WeaponComponent::OnCoolDownEnd,
+	                                       CurrentCoolDown,
+	                                       false, CurrentCoolDown);
 }
 
 
 float UChT_WeaponComponent::PlayAttackAnim()
 {
 	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
-	return CharacterOwner->PlayAnimMontage(CurrentWeapon->AttackMontage,1,NAME_None);
+	return CharacterOwner->PlayAnimMontage(CurrentWeapon->AttackMontage, 1, NAME_None);
 }
 
 void UChT_WeaponComponent::OnSwingEnd()
 {
-	UE_LOG(WeaponComponetLog,Display,TEXT("Swing end!"));
+	UE_LOG(WeaponComponetLog, Display, TEXT("Swing end!"));
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = false;
-	GetWorld()->GetTimerManager().ClearTimer(TimerHandler);
+	GetWorld()->GetTimerManager().ClearTimer(AnimTimerHandler);;
+}
+
+void UChT_WeaponComponent::OnCoolDownEnd()
+{
+	CurrentCoolDown = 0.0f;
 }

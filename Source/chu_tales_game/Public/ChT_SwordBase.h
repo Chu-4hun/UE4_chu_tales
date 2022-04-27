@@ -19,6 +19,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UAnimMontage* AttackMontage;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
+	float CoolDown = 0.0f;
+
 protected:
 	// Called when the game starts or when spawned
 	UPROPERTY(VisibleAnywhere)
@@ -33,8 +36,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float Damage = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
-	float CoolDown = 0.0f;
+	
 
 	
 

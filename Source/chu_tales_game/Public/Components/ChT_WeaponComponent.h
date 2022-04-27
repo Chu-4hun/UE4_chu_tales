@@ -40,13 +40,20 @@ private:
 	UPROPERTY()
 	AChT_SwordBase* CurrentWeapon;
 
+	UPROPERTY()
+	float CurrentCoolDown = 0.0f;
+
 	UFUNCTION()
 	float PlayAttackAnim();
 
 	UFUNCTION()
 	void OnSwingEnd();
 
-	FTimerHandle TimerHandler;
+	UFUNCTION()
+	void OnCoolDownEnd();
+
+	FTimerHandle AnimTimerHandler;
+	FTimerHandle CoolDownTimerHandler;
 
 
 	void SpawnWeapon();
