@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ChT_SwordBase.h"
 #include "Components/ActorComponent.h"
+#include "GameFramework/Character.h"
 #include "ChT_WeaponComponent.generated.h"
 
 
@@ -18,26 +19,35 @@ class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 
 public:
 	UChT_WeaponComponent();
+	
+	UFUNCTION()
+	void Attack();
 
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AChT_SwordBase> WeaponClass;
 
-	UPROPERTY(EditAnywhere,Category = "Weapon")
-	FName BoneName = "hand_r_weapon";
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+	FName SocketName = "hand_r_weapon";
+
+
+	
 
 	virtual void BeginPlay() override;
-
-	UFUNCTION()
-	void Attack();
-	
 
 private:
 	UPROPERTY()
 	AChT_SwordBase* CurrentWeapon;
-	
 
-	
+	UFUNCTION()
+	float PlayAttackAnim();
+
+	UFUNCTION()
+	void OnSwingEnd();
+
+	FTimerHandle TimerHandler;
+
+
 	void SpawnWeapon();
 };
