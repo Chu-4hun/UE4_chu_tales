@@ -17,27 +17,44 @@ UChT_WeaponComponent::UChT_WeaponComponent()
 void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	SpawnWeapon();
+	EquipWeapon();
 }
 
 
-void UChT_WeaponComponent::SpawnWeapon()
+void UChT_WeaponComponent::SpawnWeapon(FName InputSocet)
 {
 	if (!GetWorld()) return;
 	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
-
-	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass);
+	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass); // Refactor This!!!
 
 	if (!CurrentWeapon)return;
 
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-	CurrentWeapon->AttachToComponent(CharacterOwner->GetMesh(), AttachmentRules, SocketName); //"hand_r_weapon"
+	CurrentWeapon->AttachToComponent(CharacterOwner->GetMesh(), AttachmentRules, InputSocet); 
 }
+
+
+void UChT_WeaponComponent::EquipWeapon()
+{
+	SpawnWeapon(HandSocketName);
+}
+
+void UChT_WeaponComponent::DeEquipWeapon()
+{
+	UE_LOG(WeaponComponetLog, Display, TEXT("Detroy"));
+	
+	
+	CurrentWeapon->Destroy(); // not Working
+	SpawnWeapon(BackSocketName);
+}
+
+
 
 void UChT_WeaponComponent::Attack()
 {
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = true;
+	EquipWeapon();
 	float Delay = PlayAttackAnim();
 
 	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
@@ -48,6 +65,9 @@ void UChT_WeaponComponent::Attack()
 	GetWorld()->GetTimerManager().SetTimer(CoolDownTimerHandler, this, &UChT_WeaponComponent::OnCoolDownEnd,
 	                                       CurrentCoolDown,
 	                                       false, CurrentCoolDown);
+	GetWorld()->GetTimerManager().SetTimer(DeEquipTimerHandler, this, &UChT_WeaponComponent::OnDeEquipTimer,
+	                                       TimeToDeEquip,
+	                                       false, TimeToDeEquip);
 }
 
 
@@ -67,4 +87,10 @@ void UChT_WeaponComponent::OnSwingEnd()
 void UChT_WeaponComponent::OnCoolDownEnd()
 {
 	CurrentCoolDown = 0.0f;
+}
+
+void UChT_WeaponComponent::OnDeEquipTimer()
+{
+	UE_LOG(WeaponComponetLog, Display, TEXT("DeEquip!"));
+	DeEquipWeapon();
 }

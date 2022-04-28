@@ -23,13 +23,25 @@ public:
 	UFUNCTION()
 	void Attack();
 
+	UFUNCTION()
+	void EquipWeapon();
+
+	UFUNCTION()
+	void DeEquipWeapon();
+
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AChT_SwordBase> WeaponClass;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon")
-	FName SocketName = "hand_r_weapon";
+	FName HandSocketName = "hand_r_weapon";
+
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+	FName BackSocketName = "hand_r_weapon";
+
+	UPROPERTY(EditAnywhere, Category = "Weapon", meta = (ClampMin = 0.0f))
+	float TimeToDeEquip = 5.0f;
 
 
 	
@@ -52,9 +64,13 @@ private:
 	UFUNCTION()
 	void OnCoolDownEnd();
 
+	UFUNCTION()
+	void OnDeEquipTimer();
+
 	FTimerHandle AnimTimerHandler;
 	FTimerHandle CoolDownTimerHandler;
+	FTimerHandle DeEquipTimerHandler;
 
 
-	void SpawnWeapon();
+	void SpawnWeapon(FName InputSocet);
 };
