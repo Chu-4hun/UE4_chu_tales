@@ -23,10 +23,10 @@ public:
 	UFUNCTION()
 	void Attack();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void EquipWeapon();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void DeEquipWeapon();
 
 
