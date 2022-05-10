@@ -25,13 +25,11 @@ AChT_BaseCharacter::AChT_BaseCharacter(const FObjectInitializer& ObjInit): Super
 	CameraComponent->SetupAttachment(SpringArmComponent);
 
 	HealthComponent = CreateDefaultSubobject<UChT_HealthComponent>("HealthComponent");
-	
+
 	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
 	HealthTextComponent->SetupAttachment(GetRootComponent());
 
 	WeaponComponent = CreateDefaultSubobject<UChT_WeaponComponent>("Weapon Component");
-
-	
 }
 
 // Called when the game starts or when spawned
@@ -68,6 +66,7 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	check(PlayerInputComponent);
 	check(WeaponComponent);
 
+
 	PlayerInputComponent->BindAxis("MoveForward", this, &AChT_BaseCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AChT_BaseCharacter::MoveRight);
 	PlayerInputComponent->BindAxis("LookUp", this, &AChT_BaseCharacter::AddControllerPitchInput);
@@ -77,8 +76,23 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AChT_BaseCharacter::Jump);
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
-	//Slash attack moved to BPs
-	PlayerInputComponent->BindAction("Attack", IE_Pressed,WeaponComponent,&UChT_WeaponComponent::Attack);
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, WeaponComponent, &UChT_WeaponComponent::Attack);
+	PlayerInputComponent->BindAction("Roll", IE_DoubleClick,this, &AChT_BaseCharacter::Roll);
+	PlayerInputComponent->BindAction("Roll_Gamepad", IE_Pressed,this, &AChT_BaseCharacter::Roll);
+	
+}
+
+void AChT_BaseCharacter::Roll()
+{
+	if (this->GetMesh()->GetAnimInstance()->IsAnyMontagePlaying())return;
+	WeaponComponent->DeEquipWeapon();
+	this->bUseControllerRotationYaw = false;
+
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+	{
+		this->bUseControllerRotationYaw = true;
+	}, PlayAnimMontage(RollAnimMontage), false);
 }
 
 void AChT_BaseCharacter::MoveForward(float Amount)
@@ -128,14 +142,14 @@ float AChT_BaseCharacter::GetMovementDirection() const
 void AChT_BaseCharacter::OnDeath()
 {
 	UE_LOG(BaseCharacterLog, Display, TEXT("Player %s is dead"), *GetName())
-	
+
 	PlayAnimMontage(DeathAnimMontage);
 	GetCharacterMovement()->DisableMovement();
 	SetLifeSpan(LifeSpanOnDeath);
 
-	if(Controller)
+	WeaponComponent->DestroyWeapon();
+	if (Controller)
 	{
 		Controller->ChangeState(NAME_Spectating);
 	}
-	
 }

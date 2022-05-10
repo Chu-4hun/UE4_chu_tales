@@ -29,6 +29,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void DeEquipWeapon();
 
+	UFUNCTION(BlueprintCallable)
+	void DestroyWeapon();
+	
+
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")

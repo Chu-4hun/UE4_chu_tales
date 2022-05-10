@@ -62,6 +62,11 @@ void UChT_WeaponComponent::DeEquipWeapon()
 	SwapWeaponSocket(BackSocketName);
 }
 
+void UChT_WeaponComponent::DestroyWeapon()
+{
+	CurrentWeapon->Destroy();
+}
+
 
 void UChT_WeaponComponent::Attack()
 {

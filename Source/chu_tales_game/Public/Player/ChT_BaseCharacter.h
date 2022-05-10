@@ -44,6 +44,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	UAnimMontage* DeathAnimMontage;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
+	UAnimMontage* RollAnimMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Damage")
 	float LifeSpanOnDeath = 5.0f;
@@ -72,6 +75,7 @@ private:
 
 	void MoveForward(float Amount);
 	void MoveRight(float Amount);
+	void Roll();
 
 	void Zoom(float Amount);
 
@@ -82,3 +86,7 @@ private:
 
 	void OnHealthChanged(float Health);
 };
+
+
+
+

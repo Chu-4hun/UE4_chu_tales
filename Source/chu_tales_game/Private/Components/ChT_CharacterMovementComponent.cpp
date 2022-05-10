@@ -5,9 +5,16 @@
 
 #include "Player/ChT_BaseCharacter.h"
 
+DEFINE_LOG_CATEGORY_STATIC(CharacterMovementComponent, All, All);
+
+UChT_CharacterMovementComponent::UChT_CharacterMovementComponent()
+{
+	Owner = Cast<AChT_BaseCharacter>(GetPawnOwner());
+}
+
+
 float UChT_CharacterMovementComponent::GetMaxSpeed() const
 {
 	const float MaxSpeed = Super::GetMaxSpeed();
-	const AChT_BaseCharacter* Player = Cast<AChT_BaseCharacter>(GetPawnOwner());
-	return Player && Player->IsRunning() ? MaxSpeed * RunModifier : MaxSpeed;
+	return Owner && Owner->IsRunning() ? MaxSpeed * RunModifier : MaxSpeed;
 }
