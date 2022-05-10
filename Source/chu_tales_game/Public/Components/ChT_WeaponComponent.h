@@ -56,7 +56,7 @@ private:
 	float CurrentCoolDown = 0.0f;
 
 	UFUNCTION()
-	float PlayAttackAnim();
+	float PlayAttackAnim() const;
 
 	UFUNCTION()
 	void OnSwingEnd();
@@ -71,6 +71,13 @@ private:
 	FTimerHandle CoolDownTimerHandler;
 	FTimerHandle DeEquipTimerHandler;
 
+	UPROPERTY()
+	bool bIsEquipped = false;
 
-	void SpawnWeapon(FName InputSocet);
+	UPROPERTY()
+	ACharacter* CharacterOwner;
+
+
+	void SpawnWeapon();
+	void SwapWeaponSocket(FName ToInputSocket);
 };

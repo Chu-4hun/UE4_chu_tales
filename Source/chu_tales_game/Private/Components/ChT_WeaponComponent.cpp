@@ -17,45 +17,58 @@ UChT_WeaponComponent::UChT_WeaponComponent()
 void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	CharacterOwner = Cast<ACharacter>(GetOwner());
+	SpawnWeapon();
 	EquipWeapon();
 }
 
 
-void UChT_WeaponComponent::SpawnWeapon(FName InputSocet)
+void UChT_WeaponComponent::SpawnWeapon()
 {
 	if (!GetWorld()) return;
-	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
 	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass); // Refactor This!!!
-
 	if (!CurrentWeapon)return;
+}
 
+void UChT_WeaponComponent::SwapWeaponSocket(FName ToInputSocket)
+{
+	FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-	CurrentWeapon->AttachToComponent(CharacterOwner->GetMesh(), AttachmentRules, InputSocet); 
+	// ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
+
+	if (CurrentWeapon->IsAttachedTo(CharacterOwner))
+	{
+		CurrentWeapon->DetachFromActor(DetachmentRule);
+	}
+	CurrentWeapon->AttachToComponent(CharacterOwner->GetMesh(), AttachmentRules, ToInputSocket);
 }
 
 
 void UChT_WeaponComponent::EquipWeapon()
 {
-	SpawnWeapon(HandSocketName);
+	UE_LOG(WeaponComponetLog, Display, TEXT("Equipped"));
+	bIsEquipped = true;
+	SwapWeaponSocket(HandSocketName);
 }
 
 void UChT_WeaponComponent::DeEquipWeapon()
 {
-	UE_LOG(WeaponComponetLog, Display, TEXT("Detroy"));
-	
-	
-	CurrentWeapon->Destroy(); // not Working
-	SpawnWeapon(BackSocketName);
-}
+	UE_LOG(WeaponComponetLog, Display, TEXT("Destroy"));
 
+
+	// FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
+	// CurrentWeapon->DetachFromActor(DetachmentRule);
+	bIsEquipped = false;
+	SwapWeaponSocket(BackSocketName);
+}
 
 
 void UChT_WeaponComponent::Attack()
 {
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = true;
-	EquipWeapon();
-	float Delay = PlayAttackAnim();
+	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
+	const float Delay = PlayAttackAnim();
 
 	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
 
@@ -71,9 +84,8 @@ void UChT_WeaponComponent::Attack()
 }
 
 
-float UChT_WeaponComponent::PlayAttackAnim()
+float UChT_WeaponComponent::PlayAttackAnim() const
 {
-	ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
 	return CharacterOwner->PlayAnimMontage(CurrentWeapon->AttackMontage, 1, NAME_None);
 }
 
