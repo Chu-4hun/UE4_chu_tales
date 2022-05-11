@@ -77,8 +77,7 @@ void AChT_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	PlayerInputComponent->BindAction("Run", IE_Pressed, this, &AChT_BaseCharacter::OnStartRunning);
 	PlayerInputComponent->BindAction("Run", IE_Released, this, &AChT_BaseCharacter::OnEndRunning);
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, WeaponComponent, &UChT_WeaponComponent::Attack);
-	PlayerInputComponent->BindAction("Roll", IE_DoubleClick,this, &AChT_BaseCharacter::Roll);
-	PlayerInputComponent->BindAction("Roll_Gamepad", IE_Pressed,this, &AChT_BaseCharacter::Roll);
+	PlayerInputComponent->BindAction("Roll", IE_Pressed,this, &AChT_BaseCharacter::Roll);
 	
 }
 

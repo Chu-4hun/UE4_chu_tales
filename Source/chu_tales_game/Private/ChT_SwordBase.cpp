@@ -26,11 +26,17 @@ AChT_SwordBase::AChT_SwordBase()
 	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AChT_SwordBase::OnOverlapBegin);
 }
 
+void AChT_SwordBase::SetOwner(AActor* NewOwner)
+{
+	Super::SetOwner(NewOwner);
+}
+
+
 void AChT_SwordBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                     const FHitResult& SweepResult)
 {
-	const AActor* Player = (AActor*)UGameplayStatics::GetPlayerCharacter(GetWorld(),0) ; //weak point for Networking
+	const AActor* Player =GetOwner();
 	if (OtherActor == Player)return;
 	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red,
 	                                 FString::Printf(

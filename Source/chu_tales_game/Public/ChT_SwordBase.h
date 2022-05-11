@@ -22,6 +22,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float CoolDown = 0.0f;
 
+	virtual void SetOwner(AActor* NewOwner) override;
+
 protected:
 	// Called when the game starts or when spawned
 	UPROPERTY(VisibleAnywhere)
@@ -36,9 +38,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float Damage = 0.0f;
 
-	
-
-	
 
 	UFUNCTION()
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor,
@@ -49,7 +48,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	
 
 	void DealDamageToActor(AActor* Other, float DealDamage);
 };

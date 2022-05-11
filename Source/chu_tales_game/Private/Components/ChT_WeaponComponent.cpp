@@ -26,7 +26,7 @@ void UChT_WeaponComponent::BeginPlay()
 void UChT_WeaponComponent::SpawnWeapon()
 {
 	if (!GetWorld()) return;
-	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass); // Refactor This!!!
+	CurrentWeapon =	GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass); // Refactor This!!!
 	if (!CurrentWeapon)return;
 }
 
@@ -35,6 +35,7 @@ void UChT_WeaponComponent::SwapWeaponSocket(FName ToInputSocket)
 	FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 	// ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
+	CurrentWeapon->SetOwner(CharacterOwner);
 
 	if (CurrentWeapon->IsAttachedTo(CharacterOwner))
 	{

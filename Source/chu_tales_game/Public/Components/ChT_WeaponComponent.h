@@ -31,24 +31,19 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void DestroyWeapon();
-	
-
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	TSubclassOf<AChT_SwordBase> WeaponClass;
 
 	UPROPERTY(EditAnywhere, Category = "Weapon")
-	FName HandSocketName = "hand_r_weapon";
+	FName HandSocketName = "hand_rSocket";
 
 	UPROPERTY(EditAnywhere, Category = "Weapon")
-	FName BackSocketName = "hand_r_weapon";
+	FName BackSocketName = "neck_01Socket";
 
 	UPROPERTY(EditAnywhere, Category = "Weapon", meta = (ClampMin = 0.0f))
 	float TimeToDeEquip = 5.0f;
-
-
-	
 
 	virtual void BeginPlay() override;
 
