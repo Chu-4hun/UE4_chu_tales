@@ -81,9 +81,9 @@ private:
 
 	void OnStartRunning();
 	void OnEndRunning();
-
+	UFUNCTION()
 	void OnDeath();
-
+	UFUNCTION()
 	void OnHealthChanged(float Health);
 };
 

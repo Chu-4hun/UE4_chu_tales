@@ -6,8 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "ChT_HealthComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnDeathSignsture);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSugnature, float);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathSignsture);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSugnature, float, Health);
 
 USTRUCT(BlueprintType)
 struct FAutoHeal
@@ -43,7 +43,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsDead() const {return FMath::IsNearlyZero(Health);};
 
+	UPROPERTY(BlueprintAssignable)
 	FOnDeathSignsture OnDeath;
+	UPROPERTY(BlueprintAssignable)
 	FOnHealthChangedSugnature OnHealthChanged;
 
 protected:
@@ -62,7 +64,7 @@ private:
 	UFUNCTION()
 	void OnTakeAnyDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	                           class AController* InstigatedBy, AActor* DamageCauser);
-
+	
 	void HealUpdate();
 	void SetHealth(float NewHealth);
 };

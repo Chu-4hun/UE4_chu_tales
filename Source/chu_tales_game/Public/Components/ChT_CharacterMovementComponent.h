@@ -15,12 +15,9 @@ class CHU_TALES_GAME_API UChT_CharacterMovementComponent : public UCharacterMove
 {
 	GENERATED_BODY()
 public:
-	UChT_CharacterMovementComponent();
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Movement", meta = (ClampMin = "1.0", ClampMax = "50.0"))
 	float RunModifier = 2.0f;
 
 	virtual float GetMaxSpeed() const override;
-private:
-	const AChT_BaseCharacter* Owner;
 };

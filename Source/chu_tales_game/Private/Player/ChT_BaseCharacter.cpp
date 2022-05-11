@@ -43,8 +43,8 @@ void AChT_BaseCharacter::BeginPlay()
 
 	OnHealthChanged(HealthComponent->GetHealth());
 
-	HealthComponent->OnDeath.AddUObject(this, &AChT_BaseCharacter::OnDeath);
-	HealthComponent->OnHealthChanged.AddUObject(this, &AChT_BaseCharacter::OnHealthChanged);
+	HealthComponent->OnDeath.AddDynamic(this, &AChT_BaseCharacter::OnDeath);
+	HealthComponent->OnHealthChanged.AddDynamic(this, &AChT_BaseCharacter::OnHealthChanged);
 }
 
 void AChT_BaseCharacter::OnHealthChanged(float Health)
