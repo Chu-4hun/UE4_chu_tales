@@ -24,6 +24,8 @@ public:
 
 	virtual void SetOwner(AActor* NewOwner) override;
 
+	bool CanDealDamage = false;
+
 protected:
 	// Called when the game starts or when spawned
 	UPROPERTY(VisibleAnywhere)
@@ -48,6 +50,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-
+	
 	void DealDamageToActor(AActor* Other, float DealDamage);
 };

@@ -7,6 +7,7 @@
 
 
 DEFINE_LOG_CATEGORY_STATIC(SwordLog, All, All);
+
 // Sets default values
 AChT_SwordBase::AChT_SwordBase()
 {
@@ -36,12 +37,21 @@ void AChT_SwordBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                     const FHitResult& SweepResult)
 {
-	const AActor* Player =GetOwner();
+	const AActor* Player = GetOwner();
 	if (OtherActor == Player)return;
-	GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red,
-	                                 FString::Printf(
-		                                 TEXT("Deal damage: %f to %s"), Damage,*OtherActor->GetName()));
-	DealDamageToActor(OtherActor,Damage);
+	if (CanDealDamage)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red,
+		                                 FString::Printf(
+			                                 TEXT("Deal damage: %f to %s"), Damage, *OtherActor->GetName()));
+		DealDamageToActor(OtherActor, Damage);
+		CanDealDamage = false;
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
+		{
+			CanDealDamage = true;
+		}, CoolDown, false);
+	}
 }
 
 // Called when the game starts or when spawned

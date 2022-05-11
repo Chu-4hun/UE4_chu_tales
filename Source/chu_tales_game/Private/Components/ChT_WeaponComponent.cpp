@@ -74,6 +74,7 @@ void UChT_WeaponComponent::Attack()
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = true;
 	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
+	CurrentWeapon->CanDealDamage = true;
 	const float Delay = PlayAttackAnim();
 
 	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
@@ -99,6 +100,7 @@ void UChT_WeaponComponent::OnSwingEnd()
 {
 	UE_LOG(WeaponComponetLog, Display, TEXT("Swing end!"));
 	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = false;
+	CurrentWeapon->CanDealDamage = false;
 	GetWorld()->GetTimerManager().ClearTimer(AnimTimerHandler);;
 }
 
