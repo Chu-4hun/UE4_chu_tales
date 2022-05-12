@@ -18,10 +18,7 @@ void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterOwner = Cast<ACharacter>(GetOwner());
-	if (CurrentWeapon == nullptr)
-	{
-		//Err Handler needed!!
-	}
+	if (!CurrentWeapon)return;
 	SpawnWeapon();
 	EquipWeapon();
 }
@@ -36,6 +33,7 @@ void UChT_WeaponComponent::SpawnWeapon()
 
 void UChT_WeaponComponent::SwapWeaponSocket(FName ToInputSocket)
 {
+	if (!CurrentWeapon)return;
 	FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
 
@@ -66,6 +64,7 @@ void UChT_WeaponComponent::DeEquipWeapon()
 
 void UChT_WeaponComponent::DestroyWeapon()
 {
+	if (!CurrentWeapon)return;
 	CurrentWeapon->Destroy();
 }
 
@@ -73,9 +72,10 @@ void UChT_WeaponComponent::DestroyWeapon()
 void UChT_WeaponComponent::Attack()
 {
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
-	// Cast<TSubclassOf<AChT_CharacterBase>>(CharacterOwner->bIsUpperBody = true; //FIXME
+	if (!CurrentWeapon)return;
 
 	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = true;
+	
 	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
 	CurrentWeapon->CanDealDamage = true;
 	const float Delay = PlayAttackAnim();
@@ -102,6 +102,7 @@ float UChT_WeaponComponent::PlayAttackAnim() const
 void UChT_WeaponComponent::OnSwingEnd()
 {
 	UE_LOG(WeaponComponetLog, Display, TEXT("Swing end!"));
+	if (!CurrentWeapon)return;
 	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = false;
 	CurrentWeapon->CanDealDamage = false;
 	GetWorld()->GetTimerManager().ClearTimer(AnimTimerHandler);;
