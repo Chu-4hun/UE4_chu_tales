@@ -6,7 +6,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "ChT_CharacterMovementComponent.generated.h"
 
-class AChT_BaseCharacter;
+class AChT_PlayerCharacter;
 /**
  * 
  */

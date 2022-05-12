@@ -4,7 +4,7 @@
 #include "Components/ChT_WeaponComponent.h"
 
 #include "GameFramework/Character.h"
-#include "Player/ChT_BaseCharacter.h"
+#include "ChT_CharacterBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(WeaponComponetLog, All, All);
 
@@ -18,6 +18,10 @@ void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterOwner = Cast<ACharacter>(GetOwner());
+	if (CurrentWeapon == nullptr)
+	{
+		//Err Handler needed!!
+	}
 	SpawnWeapon();
 	EquipWeapon();
 }
@@ -26,7 +30,7 @@ void UChT_WeaponComponent::BeginPlay()
 void UChT_WeaponComponent::SpawnWeapon()
 {
 	if (!GetWorld()) return;
-	CurrentWeapon =	GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass); // Refactor This!!!
+	CurrentWeapon = GetWorld()->SpawnActor<AChT_SwordBase>(WeaponClass);
 	if (!CurrentWeapon)return;
 }
 
@@ -34,7 +38,7 @@ void UChT_WeaponComponent::SwapWeaponSocket(FName ToInputSocket)
 {
 	FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
 	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
-	// ACharacter* CharacterOwner = Cast<ACharacter>(GetOwner());
+
 	CurrentWeapon->SetOwner(CharacterOwner);
 
 	if (CurrentWeapon->IsAttachedTo(CharacterOwner))
@@ -56,9 +60,6 @@ void UChT_WeaponComponent::DeEquipWeapon()
 {
 	UE_LOG(WeaponComponetLog, Display, TEXT("Destroy"));
 
-
-	// FDetachmentTransformRules DetachmentRule(EDetachmentRule::KeepWorld, false);
-	// CurrentWeapon->DetachFromActor(DetachmentRule);
 	bIsEquipped = false;
 	SwapWeaponSocket(BackSocketName);
 }
@@ -72,7 +73,9 @@ void UChT_WeaponComponent::DestroyWeapon()
 void UChT_WeaponComponent::Attack()
 {
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
-	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = true;
+	// Cast<TSubclassOf<AChT_CharacterBase>>(CharacterOwner->bIsUpperBody = true; //FIXME
+
+	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = true;
 	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
 	CurrentWeapon->CanDealDamage = true;
 	const float Delay = PlayAttackAnim();
@@ -99,7 +102,7 @@ float UChT_WeaponComponent::PlayAttackAnim() const
 void UChT_WeaponComponent::OnSwingEnd()
 {
 	UE_LOG(WeaponComponetLog, Display, TEXT("Swing end!"));
-	Cast<AChT_BaseCharacter>(GetOwner())->bIsUpperBody = false;
+	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = false;
 	CurrentWeapon->CanDealDamage = false;
 	GetWorld()->GetTimerManager().ClearTimer(AnimTimerHandler);;
 }

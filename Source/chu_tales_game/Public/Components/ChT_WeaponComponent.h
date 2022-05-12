@@ -9,7 +9,7 @@
 #include "ChT_WeaponComponent.generated.h"
 
 
-class AChT_BaseCharacter;
+class AChT_PlayerCharacter;
 class AChT_BaseWeapon;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -20,7 +20,7 @@ class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 public:
 	UChT_WeaponComponent();
 	
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable)
 	void Attack();
 
 	UFUNCTION(BlueprintCallable)
