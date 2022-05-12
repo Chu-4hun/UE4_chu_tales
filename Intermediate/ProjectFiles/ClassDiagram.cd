@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AChu_tales_gameGameModeBase">
+    <Position X="2.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\chu_tales_gameGameModeBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AChT_GameModeBase">
+    <Position X="4" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\ChT_GameModeBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AChT_SwordBase">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACASCIAAAAAAEAAAAAAAAAAAAICAAAAAAABAAgAAw=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\ChT_SwordBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ASandboxPawn">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAIAIAAABJAAAAABAAAAAAAEAAAAAQAAABAAkQAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\SandboxPawn.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ASandboxPlayerController">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAIAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAQAAAgAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\SandboxPlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UChT_CharacterMovementComponent">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAEAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Components\ChT_CharacterMovementComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UChT_HealthComponent">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAAAAAAEEJACAAAEAAQAABAAAiAgAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Components\ChT_HealthComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UChT_WeaponComponent">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAgAAQgAAAABAIAAAARAAgAIYAAoKIAACIBACgAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Components\ChT_WeaponComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AChT_DevDamageActor">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAKAACAAIAAAAAAAAAAAAAgAAAAAAAAAgAABAAgQAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Dev\ChT_DevDamageActor.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UChT_FireDamageType">
+    <Position X="5.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Dev\ChT_FireDamageType.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UChT_IceDamageType">
+    <Position X="7" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Dev\ChT_IceDamageType.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AChT_BaseCharacter">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAIAAAIBIAAgEGAEQoAAAAEAAAAAwAAAAAEg5AA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Player\ChT_BaseCharacter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AChT_PlayerController">
+    <Position X="8.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Player\ChT_PlayerController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="FAutoHeal">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAQAAAAAAAAAAAAAAQAgAAAAEAAAAAAAAA=</HashCode>
+      <FileName>D:\UE4\Projects\chu_game\Source\chu_tales_game\Public\Components\ChT_HealthComponent.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
