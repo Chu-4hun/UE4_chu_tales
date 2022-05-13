@@ -12,14 +12,24 @@
 class AChT_PlayerCharacter;
 class AChT_BaseWeapon;
 
+UENUM()
+	enum WeaponType
+	{
+		Heavy2Hand UMETA(DisplayName = "Heavy 2 arm handled sword"),
+		Heavy1Hand UMETA(DisplayName = "Heavy 1 arm handled sword"),
+		light1Hand UMETA(DisplayName = "Light 1 arm handled sword"),
+	};
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class CHU_TALES_GAME_API UChT_WeaponComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+	
+
 public:
 	UChT_WeaponComponent();
-	
+
 	UFUNCTION(BlueprintCallable)
 	void Attack();
 
@@ -31,6 +41,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void DestroyWeapon();
+
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Weapon")

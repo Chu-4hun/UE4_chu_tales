@@ -17,7 +17,7 @@ public:
 	AChT_SwordBase();
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UAnimMontage* AttackMontage;
+	UAnimMontage* AttackMontage; //Refactor
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float CoolDown = 0.0f;

@@ -18,7 +18,6 @@ void UChT_WeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	CharacterOwner = Cast<ACharacter>(GetOwner());
-	if (!CurrentWeapon)return;
 	SpawnWeapon();
 	EquipWeapon();
 }
@@ -72,13 +71,12 @@ void UChT_WeaponComponent::DestroyWeapon()
 void UChT_WeaponComponent::Attack()
 {
 	if (!FMath::IsNearlyZero(CurrentCoolDown))return;
-	if (!CurrentWeapon)return;
 
 	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = true;
 	
 	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
 	CurrentWeapon->CanDealDamage = true;
-	const float Delay = PlayAttackAnim();
+	float Delay = PlayAttackAnim();
 
 	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
 

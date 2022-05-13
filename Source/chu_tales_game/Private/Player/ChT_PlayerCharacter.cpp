@@ -34,6 +34,7 @@ void AChT_PlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	check(HealthTextComponent);
+	OnHealthChanged(HealthComponent->GetHealth());
 
 	HealthComponent->OnHealthChanged.AddDynamic(this, &AChT_PlayerCharacter::OnHealthChanged);
 	HealthComponent->OnDeath.AddDynamic(this, &AChT_PlayerCharacter::OnDeath);
@@ -85,39 +86,13 @@ void AChT_PlayerCharacter::Roll()
 	}, PlayAnimMontage(RollAnimMontage), false);
 }
 
-void AChT_PlayerCharacter::MoveForward(float Amount)
-{
-	IsMovingForward = Amount > 0.0f;
-	AddMovementInput(GetActorForwardVector(), Amount);
-}
-
-void AChT_PlayerCharacter::MoveRight(float Amount)
-{
-	if (Amount == 0.0f) return;
-	AddMovementInput(GetActorRightVector(), Amount);
-}
-
 void AChT_PlayerCharacter::Zoom(float Amount)
 {
 	SpringArmComponent->TargetArmLength = FMath::Clamp(SpringArmComponent->TargetArmLength + Amount * -100, 100.0f,
 	                                                   600.0f);
 }
 
-void AChT_PlayerCharacter::OnStartRunning()
-{
-	WantsToRun = true;
-}
 
-void AChT_PlayerCharacter::OnEndRunning()
-{
-	WantsToRun = false;
-}
-
-
-bool AChT_PlayerCharacter::IsRunning() const
-{
-	return WantsToRun && IsMovingForward && !GetVelocity().IsZero();
-}
 
 float AChT_PlayerCharacter::GetMovementDirection() const
 {

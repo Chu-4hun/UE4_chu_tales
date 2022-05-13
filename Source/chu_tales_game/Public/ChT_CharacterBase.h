@@ -20,6 +20,9 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category ="Animation")
 	bool bIsUpperBody = false;
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Movement")
+	virtual bool IsRunning();
 	
 
 protected:
@@ -36,11 +39,21 @@ protected:
 	virtual void OnDeath();
 	UFUNCTION()
 	virtual void OnHealthChanged(float Health);
+
+	bool IsMovingForward = false;
+
+	void MoveForward(float Amount);
+	void MoveRight(float Amount);
 	
+	void OnStartRunning();
+	void OnEndRunning();
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 private:
+	bool WantsToRun = false;
+	
+	
 	
 };

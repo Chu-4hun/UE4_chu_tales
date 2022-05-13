@@ -24,6 +24,7 @@ void UChT_HealthComponent::BeginPlay()
 	{
 		ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &UChT_HealthComponent::OnTakeAnyDamage);
 	}
+	
 }
 
 

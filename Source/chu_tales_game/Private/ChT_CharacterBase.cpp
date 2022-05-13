@@ -7,6 +7,8 @@
 #include "Components/ChT_HealthComponent.h"
 #include "Components/ChT_WeaponComponent.h"
 
+
+DEFINE_LOG_CATEGORY_STATIC(CharacterBaseLog, All, All);
 // Sets default values
 AChT_CharacterBase::AChT_CharacterBase(const FObjectInitializer& ObjInit): Super(
 	ObjInit.SetDefaultSubobjectClass<UChT_CharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -15,6 +17,7 @@ AChT_CharacterBase::AChT_CharacterBase(const FObjectInitializer& ObjInit): Super
 	PrimaryActorTick.bCanEverTick = true;
 
 	HealthComponent = CreateDefaultSubobject<UChT_HealthComponent>("HealthComponent");
+	
 	WeaponComponent = CreateDefaultSubobject<UChT_WeaponComponent>("Weapon Component");
 }
 
@@ -39,4 +42,31 @@ void AChT_CharacterBase::OnHealthChanged(float Health)
 void AChT_CharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AChT_CharacterBase::MoveForward(float Amount)
+{
+	IsMovingForward = Amount > 0.0f;
+	AddMovementInput(GetActorForwardVector(), Amount);
+}
+
+void AChT_CharacterBase::MoveRight(float Amount)
+{
+	if (Amount == 0.0f) return;
+	AddMovementInput(GetActorRightVector(), Amount);
+}
+
+void AChT_CharacterBase::OnStartRunning()
+{
+	WantsToRun = true;
+}
+
+void AChT_CharacterBase::OnEndRunning()
+{
+	WantsToRun = false;
+}
+
+bool AChT_CharacterBase::IsRunning() 
+{
+	return WantsToRun && IsMovingForward && !GetVelocity().IsZero();
 }

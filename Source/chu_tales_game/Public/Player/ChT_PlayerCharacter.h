@@ -45,7 +45,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category ="Damage")
 	float LifeSpanOnDeath = 5.0f;
-
 	virtual void BeginPlay() override;
 
 public:
@@ -54,26 +53,17 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	bool IsRunning() const;
-
+	
 	UFUNCTION(BlueprintCallable, Category = "Movement")
 	float GetMovementDirection() const;
 
 
 private:
-	bool WantsToRun = false;
-	bool IsMovingForward = false;
-
-	void MoveForward(float Amount);
-	void MoveRight(float Amount);
 	void Roll();
 
+	
 	void Zoom(float Amount);
 
-	void OnStartRunning();
-	void OnEndRunning();
 	
 	virtual void OnDeath() override;
 	virtual void OnHealthChanged(float Health) override;
