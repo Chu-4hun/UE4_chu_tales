@@ -49,7 +49,7 @@ void AChT_SwordBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
 		                                 FString::Printf(
 			                                 TEXT("Deal damage: %f to %s"), Damage, *OtherActor->GetName()));
 		DealDamageToActor(OtherActor, Damage);
-		CanDealDamage = false;
+		
 		FTimerHandle TimerHandle;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [&]()
 		{
@@ -68,4 +68,5 @@ void AChT_SwordBase::DealDamageToActor(AActor* Other, float DealDamage)
 {
 	const TSubclassOf<UDamageType> DmgTypeClass = UDamageType::StaticClass();
 	Other->TakeDamage(DealDamage, FDamageEvent(DmgTypeClass), nullptr, this);
+	CanDealDamage = false;
 }
