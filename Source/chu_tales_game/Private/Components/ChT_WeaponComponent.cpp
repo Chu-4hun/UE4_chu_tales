@@ -75,7 +75,7 @@ void UChT_WeaponComponent::Attack()
 	Cast<AChT_CharacterBase>(CharacterOwner)->bIsUpperBody = true;
 	
 	if (!bIsEquipped) EquipWeapon(); //Get weapon in hand
-	CurrentWeapon->CanDealDamage = true;
+	
 	float Delay = PlayAttackAnim();
 
 	UE_LOG(WeaponComponetLog, Display, TEXT("Delay %f"), Delay);
@@ -94,7 +94,9 @@ void UChT_WeaponComponent::Attack()
 
 float UChT_WeaponComponent::PlayAttackAnim() const
 {
-	return CharacterOwner->PlayAnimMontage(CurrentWeapon->AttackMontage, 1, NAME_None);
+	const float InternalDelay =CharacterOwner->PlayAnimMontage(CurrentWeapon->AttackMontage, 1, NAME_None);
+	CurrentWeapon->CanDealDamage = true;
+	return InternalDelay;
 }
 
 void UChT_WeaponComponent::OnSwingEnd()

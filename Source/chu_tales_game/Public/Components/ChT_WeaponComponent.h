@@ -10,7 +10,6 @@
 
 
 class AChT_PlayerCharacter;
-class AChT_BaseWeapon;
 
 UENUM()
 	enum WeaponType

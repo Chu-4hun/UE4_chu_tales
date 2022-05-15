@@ -20,11 +20,14 @@ AChT_SwordBase::AChT_SwordBase()
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("Sword_mesh");
 	StaticMesh->SetupAttachment(GetRootComponent());
 
-	BoxCollision = CreateDefaultSubobject<UBoxComponent>("Box_collision");
-	BoxCollision->SetCollisionProfileName("SwordCollision");
-	BoxCollision->SetupAttachment(StaticMesh);
-
-	BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AChT_SwordBase::OnOverlapBegin);
+	// BoxCollision = CreateDefaultSubobject<UBoxComponent>("Box_collision");
+	// BoxCollision->SetCollisionProfileName("SwordCollision");
+	// BoxCollision->SetupAttachment(StaticMesh);
+	//
+	// BoxCollision->OnComponentBeginOverlap.AddDynamic(this, &AChT_SwordBase::OnOverlapBegin);
+	StaticMesh->SetGenerateOverlapEvents(true);
+	StaticMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	StaticMesh->OnComponentBeginOverlap.AddDynamic(this, &AChT_SwordBase::OnOverlapBegin);
 }
 
 void AChT_SwordBase::SetOwner(AActor* NewOwner)
@@ -37,8 +40,9 @@ void AChT_SwordBase::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor*
                                     UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
                                     const FHitResult& SweepResult)
 {
-	const AActor* Player = GetOwner();
-	if (OtherActor == Player)return;
+	const AActor* SwordOwner = GetOwner();
+	
+	if (OtherActor == SwordOwner || OtherActor->GetClass()->IsChildOf(AChT_SwordBase::StaticClass()))return;
 	if (CanDealDamage)
 	{
 		GEngine->AddOnScreenDebugMessage(1, 1.0f, FColor::Red,
