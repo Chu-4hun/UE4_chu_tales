@@ -34,8 +34,8 @@ protected:
 	UPROPERTY(VisibleAnywhere)
 	UStaticMeshComponent* StaticMesh;
 
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* BoxCollision;
+	// UPROPERTY(VisibleAnywhere)
+	// UBoxComponent* BoxCollision;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = 0.0f ))
 	float Damage = 0.0f;

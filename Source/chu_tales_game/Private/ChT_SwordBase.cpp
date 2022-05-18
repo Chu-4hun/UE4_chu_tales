@@ -11,7 +11,6 @@ DEFINE_LOG_CATEGORY_STATIC(SwordLog, All, All);
 // Sets default values
 AChT_SwordBase::AChT_SwordBase()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
 	SceneComponent = CreateDefaultSubobject<USceneComponent>("SceneComponent");

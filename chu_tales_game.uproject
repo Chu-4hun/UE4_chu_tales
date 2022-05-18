@@ -17,6 +17,10 @@
 		{
 			"Name": "ControlRig",
 			"Enabled": true
+		},
+		{
+			"Name": "FSR",
+			"Enabled": true
 		}
 	]
 }
